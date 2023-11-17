@@ -22,3 +22,5 @@ categories = ["data-structures"]
 publish = true
 
 [workspace.dependencies]
+know = { path = "lib/know" }
+serde = { version = "1.0", features = ["derive"] }
