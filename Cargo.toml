@@ -1,8 +1,8 @@
 # See: https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [workspace]
-members = ["lib/*"]
-default-members = ["lib/know"]
+members = ["bin/*", "lib/*"]
+default-members = ["bin/know", "lib/know"]
 resolver = "2"
 
 [workspace.package]

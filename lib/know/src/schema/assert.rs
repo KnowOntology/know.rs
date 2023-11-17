@@ -9,7 +9,7 @@ pub enum Subject {
 
 #[derive(Debug)]
 pub enum Predicate {
-    Know(String)
+    Know(String),
 }
 
 #[derive(Debug)]
