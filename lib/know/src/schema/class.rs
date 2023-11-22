@@ -8,10 +8,12 @@ use std::collections::HashMap;
 #[serde(rename_all = "camelCase")]
 pub struct Class {
     pub id: String,
+    #[serde(rename = "subclass_of")]
     pub subclass_of: Option<String>,
     pub glyph: Option<String>,
     pub label: Option<LangStrings>,
     pub comment: Option<LangStrings>,
+    #[serde(rename = "see_also")]
     pub see_also: Option<LangStrings>,
     pub properties: Option<HashMap<String, Property>>,
 }
