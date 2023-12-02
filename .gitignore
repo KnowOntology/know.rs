@@ -17,6 +17,3 @@
 /Cargo.lock
 /rust-toolchain
 /target
-
-# Know CLI binary
-/know
