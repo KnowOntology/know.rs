@@ -19,6 +19,7 @@ default = ["serde"]
 serde = ["dep:serde"]
 
 [dependencies]
+iri-string = { version = "0.7.0", features = ["serde"] }
 thiserror = "1.0.50"
 serde = { version = "1.0", features = ["derive"], optional = true }
 zerocopy = "0.7.11"

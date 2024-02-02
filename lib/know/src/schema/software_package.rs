@@ -1,5 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
+use iri_string::types::IriString;
+
 /// See: https://en.wikipedia.org/wiki/Software_package
 #[cfg(feature = "serde")]
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -7,5 +9,5 @@
 pub struct SoftwarePackage {
     pub name: String,
     pub version: String,
-    pub link: Option<String>,
+    pub link: Option<IriString>,
 }

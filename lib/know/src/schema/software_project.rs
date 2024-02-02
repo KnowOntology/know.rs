@@ -1,6 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
 use super::{Person, SoftwareLicense};
+use iri_string::types::IriString;
 
 /// See: https://en.wikipedia.org/wiki/Software
 #[cfg(feature = "serde")]
@@ -14,6 +15,6 @@ pub struct SoftwareProject {
     pub license: SoftwareLicense,
     pub authors: Vec<Person>,
     pub email: Option<String>,
-    pub link: Option<String>,
-    pub github: Option<String>,
+    pub link: Option<IriString>,
+    pub github: Option<IriString>,
 }
