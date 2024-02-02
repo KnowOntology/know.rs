@@ -38,4 +38,3 @@ $ git clone https://github.com/HaltiaAI/know.rs.git
 [![Share on Reddit](https://img.shields.io/badge/share%20on-reddit-red?logo=reddit)](https://reddit.com/submit?url=https://github.com/HaltiaAI/know.rs&title=Know.rs:%20The%20Know%20Framework%20for%20Rust)
 [![Share on Hacker News](https://img.shields.io/badge/share%20on-hacker%20news-orange?logo=ycombinator)](https://news.ycombinator.com/submitlink?u=https://github.com/HaltiaAI/know.rs&t=Know.rs:%20The%20Know%20Framework%20for%20Rust)
 [![Share on Facebook](https://img.shields.io/badge/share%20on-facebook-1976D2?logo=facebook)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/HaltiaAI/know.rs)
-[![Share on LinkedIn](https://img.shields.io/badge/share%20on-linkedin-3949AB?logo=linkedin)](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/HaltiaAI/know.rs)
