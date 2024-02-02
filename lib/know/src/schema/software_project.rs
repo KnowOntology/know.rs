@@ -1,6 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::{Person, SoftwareLicense};
+use super::{Person, SoftwareLicense, SoftwarePackage};
 use iri_string::types::IriString;
 
 /// See: https://en.wikipedia.org/wiki/Software
@@ -17,4 +17,5 @@ pub struct SoftwareProject {
     pub email: Option<String>,
     pub link: Option<IriString>,
     pub github: Option<IriString>,
+    pub package: Option<SoftwarePackage>,
 }

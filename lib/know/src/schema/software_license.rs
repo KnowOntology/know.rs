@@ -6,6 +6,7 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
 pub enum SoftwareLicense {
+    Unspecified,
     #[default]
     Unlicense,
     Other(String),
