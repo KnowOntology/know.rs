@@ -1,7 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
-use crate::prelude::*;
 use super::ThingLike;
+use crate::prelude::*;
 use std::{rc::Rc, str::FromStr};
 
 /// See: https://en.wikipedia.org/wiki/Software_package

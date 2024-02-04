@@ -1,7 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
+use super::{PersonRef, ProjectLike, SoftwareLicense, SoftwarePackageRef, ThingLike};
 use crate::prelude::*;
-use super::{PersonRef, SoftwareLicense, SoftwarePackageRef, ThingLike};
 use std::str::FromStr;
 
 #[cfg(feature = "serde")]
@@ -50,6 +50,8 @@ impl ThingLike for SoftwareProject {
         &self.name
     }
 }
+
+impl ProjectLike for SoftwareProject {}
 
 impl FromStr for SoftwareProject {
     type Err = ();
