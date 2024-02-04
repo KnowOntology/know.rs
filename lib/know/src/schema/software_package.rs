@@ -1,6 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::prelude::*;
+use super::{prelude::*, ThingLike};
 use std::{rc::Rc, str::FromStr};
 
 /// See: https://en.wikipedia.org/wiki/Software_package
@@ -12,6 +12,16 @@ pub struct SoftwarePackage {
     pub version: String,
 
     pub link: Option<IRI>,
+}
+
+impl ThingLike for SoftwarePackage {
+    fn id(&self) -> Option<&str> {
+        None
+    }
+
+    fn name(&self) -> &Name {
+        &self.name
+    }
 }
 
 impl FromStr for SoftwarePackage {

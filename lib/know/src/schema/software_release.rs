@@ -1,6 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::prelude::*;
+use super::{prelude::*, ThingLike};
 use std::str::FromStr;
 
 /// See: https://en.wikipedia.org/wiki/Software_release_life_cycle
@@ -12,6 +12,16 @@ pub struct SoftwareRelease {
     pub date: Option<Date>,
 
     pub link: Option<IRI>,
+}
+
+impl ThingLike for SoftwareRelease {
+    fn id(&self) -> Option<&str> {
+        None
+    }
+
+    fn name(&self) -> &Name {
+        &self.version
+    }
 }
 
 impl FromStr for SoftwareRelease {

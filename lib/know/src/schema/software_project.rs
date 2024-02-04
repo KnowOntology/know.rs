@@ -1,6 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::{prelude::*, PersonRef, SoftwareLicense, SoftwarePackageRef};
+use super::{prelude::*, PersonRef, SoftwareLicense, SoftwarePackageRef, ThingLike};
 use std::str::FromStr;
 
 #[cfg(feature = "serde")]
@@ -38,6 +38,16 @@ pub struct SoftwareProject {
     pub github: Option<IRI>,
 
     pub package: Option<SoftwarePackageRef>,
+}
+
+impl ThingLike for SoftwareProject {
+    fn id(&self) -> Option<&str> {
+        None
+    }
+
+    fn name(&self) -> &Name {
+        &self.name
+    }
 }
 
 impl FromStr for SoftwareProject {

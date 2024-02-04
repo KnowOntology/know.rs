@@ -1,6 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::prelude::*;
+use super::{prelude::*, ThingLike};
 use std::{
     fmt::{Display, Formatter},
     rc::Rc,
@@ -9,6 +9,20 @@ use std::{
 
 #[cfg(feature = "serde")]
 use serde_with::serde_as;
+
+pub trait PersonLike: ThingLike {
+    fn birthdate(&self) -> Option<&Date>;
+    fn parents(&self) -> Vec<PersonRef>;
+    fn father(&self) -> Option<&PersonRef>;
+    fn mother(&self) -> Option<&PersonRef>;
+    fn siblings(&self) -> &Vec<PersonRef>;
+    fn spouse(&self) -> Option<&PersonRef>;
+    fn children(&self) -> &Vec<PersonRef>;
+    fn colleagues(&self) -> &Vec<PersonRef>;
+    fn knows(&self) -> &Vec<PersonRef>;
+    fn email(&self) -> Option<&Email>;
+    fn emails(&self) -> &Vec<Email>;
+}
 
 #[cfg_attr(feature = "serde", cfg_eval::cfg_eval, serde_as)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -68,16 +82,22 @@ pub struct Person {
     pub emails: Vec<Email>,
 }
 
-impl Person {
-    pub fn name(&self) -> &Name {
-        &self.name
+impl ThingLike for Person {
+    fn id(&self) -> Option<&str> {
+        None
     }
 
-    pub fn birthdate(&self) -> Option<&Date> {
+    fn name(&self) -> &Name {
+        &self.name
+    }
+}
+
+impl PersonLike for Person {
+    fn birthdate(&self) -> Option<&Date> {
         self.birthdate.as_ref()
     }
 
-    pub fn parents(&self) -> Vec<PersonRef> {
+    fn parents(&self) -> Vec<PersonRef> {
         let mut result = vec![];
         if let Some(father) = self.father() {
             result.push(father.clone());
@@ -88,39 +108,39 @@ impl Person {
         result
     }
 
-    pub fn father(&self) -> Option<&PersonRef> {
+    fn father(&self) -> Option<&PersonRef> {
         self.father.as_ref()
     }
 
-    pub fn mother(&self) -> Option<&PersonRef> {
+    fn mother(&self) -> Option<&PersonRef> {
         self.mother.as_ref()
     }
 
-    pub fn siblings(&self) -> &Vec<PersonRef> {
+    fn siblings(&self) -> &Vec<PersonRef> {
         self.siblings.as_ref()
     }
 
-    pub fn spouse(&self) -> Option<&PersonRef> {
+    fn spouse(&self) -> Option<&PersonRef> {
         self.spouse.as_ref()
     }
 
-    pub fn children(&self) -> &Vec<PersonRef> {
+    fn children(&self) -> &Vec<PersonRef> {
         self.children.as_ref()
     }
 
-    pub fn colleagues(&self) -> &Vec<PersonRef> {
+    fn colleagues(&self) -> &Vec<PersonRef> {
         self.colleagues.as_ref()
     }
 
-    pub fn knows(&self) -> &Vec<PersonRef> {
+    fn knows(&self) -> &Vec<PersonRef> {
         self.knows.as_ref()
     }
 
-    pub fn email(&self) -> Option<&Email> {
+    fn email(&self) -> Option<&Email> {
         self.emails.first()
     }
 
-    pub fn emails(&self) -> &Vec<Email> {
+    fn emails(&self) -> &Vec<Email> {
         &self.emails
     }
 }
