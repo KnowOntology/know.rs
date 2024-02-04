@@ -1,7 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
 use super::prelude::*;
-use std::str::FromStr;
+use std::{rc::Rc, str::FromStr};
 
 /// See: https://en.wikipedia.org/wiki/Software_package
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -24,3 +24,5 @@ impl FromStr for SoftwarePackage {
         })
     }
 }
+
+pub type SoftwarePackageRef = Rc<SoftwarePackage>;

@@ -1,7 +1,11 @@
 // This is free and unencumbered software released into the public domain.
 
 use super::prelude::*;
-use std::str::FromStr;
+use std::{
+    fmt::{Display, Formatter},
+    rc::Rc,
+    str::FromStr,
+};
 
 #[cfg(feature = "serde")]
 use serde_with::serde_as;
@@ -14,9 +18,51 @@ pub struct Person {
 
     pub birthdate: Option<Date>,
 
+    pub father: Option<PersonRef>,
+
+    pub mother: Option<PersonRef>,
+
     #[cfg_attr(
         feature = "serde",
-        serde(alias = "email", default),
+        serde(
+            default,
+            alias = "sibling",
+            alias = "brothers",
+            alias = "brother",
+            alias = "sisters",
+            alias = "sister"
+        ),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub siblings: Vec<PersonRef>,
+
+    #[cfg_attr(feature = "serde", serde(default, alias = "husband", alias = "wife"))]
+    pub spouse: Option<PersonRef>,
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, alias = "child"),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub children: Vec<PersonRef>,
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, alias = "colleague"),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub colleagues: Vec<PersonRef>,
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(default),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub knows: Vec<PersonRef>,
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, alias = "email"),
         serde_as(as = "serde_with::OneOrMany<_>")
     )]
     pub emails: Vec<Email>,
@@ -29,6 +75,45 @@ impl Person {
 
     pub fn birthdate(&self) -> Option<&Date> {
         self.birthdate.as_ref()
+    }
+
+    pub fn parents(&self) -> Vec<PersonRef> {
+        let mut result = vec![];
+        if let Some(father) = self.father() {
+            result.push(father.clone());
+        }
+        if let Some(mother) = self.mother() {
+            result.push(mother.clone());
+        }
+        result
+    }
+
+    pub fn father(&self) -> Option<&PersonRef> {
+        self.father.as_ref()
+    }
+
+    pub fn mother(&self) -> Option<&PersonRef> {
+        self.mother.as_ref()
+    }
+
+    pub fn siblings(&self) -> &Vec<PersonRef> {
+        self.siblings.as_ref()
+    }
+
+    pub fn spouse(&self) -> Option<&PersonRef> {
+        self.spouse.as_ref()
+    }
+
+    pub fn children(&self) -> &Vec<PersonRef> {
+        self.children.as_ref()
+    }
+
+    pub fn colleagues(&self) -> &Vec<PersonRef> {
+        self.colleagues.as_ref()
+    }
+
+    pub fn knows(&self) -> &Vec<PersonRef> {
+        self.knows.as_ref()
     }
 
     pub fn email(&self) -> Option<&Email> {
@@ -48,5 +133,23 @@ impl FromStr for Person {
             name: input.to_string(),
             ..Default::default()
         })
+    }
+}
+
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
+pub struct PersonRef(Rc<Person>);
+
+impl Display for PersonRef {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0.name)
+    }
+}
+
+impl FromStr for PersonRef {
+    type Err = String;
+
+    fn from_str(input: &str) -> Result<Self, Self::Err> {
+        Person::from_str(input).map(Rc::new).map(PersonRef)
     }
 }
