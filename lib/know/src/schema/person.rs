@@ -1,5 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
+use super::prelude::*;
 use std::str::FromStr;
 
 #[cfg(feature = "serde")]
@@ -9,22 +10,32 @@ use serde_with::serde_as;
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
 pub struct Person {
-    pub name: String,
+    pub name: Name,
+
+    pub birthdate: Option<Date>,
 
     #[cfg_attr(
         feature = "serde",
         serde(alias = "email", default),
         serde_as(as = "serde_with::OneOrMany<_>")
     )]
-    pub emails: Vec<String>,
+    pub emails: Vec<Email>,
 }
 
 impl Person {
-    pub fn email(&self) -> Option<&String> {
+    pub fn name(&self) -> &Name {
+        &self.name
+    }
+
+    pub fn birthdate(&self) -> Option<&Date> {
+        self.birthdate.as_ref()
+    }
+
+    pub fn email(&self) -> Option<&Email> {
         self.emails.first()
     }
 
-    pub fn emails(&self) -> &Vec<String> {
+    pub fn emails(&self) -> &Vec<Email> {
         &self.emails
     }
 }

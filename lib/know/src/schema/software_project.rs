@@ -1,7 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::{Person, SoftwareLicense, SoftwarePackage};
-use iri_string::types::IriString;
+use super::{prelude::*, Person, SoftwareLicense, SoftwarePackage};
 use std::str::FromStr;
 
 #[cfg(feature = "serde")]
@@ -12,7 +11,7 @@ use serde_with::serde_as;
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
 pub struct SoftwareProject {
-    pub name: String,
+    pub name: Name,
 
     pub version: String,
 
@@ -26,15 +25,17 @@ pub struct SoftwareProject {
     #[cfg_attr(
         feature = "serde",
         serde(alias = "author", default),
-        serde_as(as = "serde_with::OneOrMany<serde_with::PickFirst<(_, serde_with::DisplayFromStr)>>")
+        serde_as(
+            as = "serde_with::OneOrMany<serde_with::PickFirst<(_, serde_with::DisplayFromStr)>>"
+        )
     )]
     pub authors: Vec<Person>,
 
-    pub email: Option<String>,
+    pub email: Option<Email>,
 
-    pub link: Option<IriString>,
+    pub link: Option<IRI>,
 
-    pub github: Option<IriString>,
+    pub github: Option<IRI>,
 
     pub package: Option<SoftwarePackage>,
 }
