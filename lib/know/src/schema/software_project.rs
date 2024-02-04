@@ -26,7 +26,7 @@ pub struct SoftwareProject {
     #[cfg_attr(
         feature = "serde",
         serde(alias = "author", default),
-        serde_as(as = "serde_with::OneOrMany<_>")
+        serde_as(as = "serde_with::OneOrMany<serde_with::PickFirst<(_, serde_with::DisplayFromStr)>>")
     )]
     pub authors: Vec<Person>,
 

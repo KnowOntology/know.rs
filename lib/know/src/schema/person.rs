@@ -19,17 +19,6 @@ pub struct Person {
     pub emails: Vec<String>,
 }
 
-impl FromStr for Person {
-    type Err = ();
-
-    fn from_str(input: &str) -> Result<Self, Self::Err> {
-        Ok(Person {
-            name: input.to_string(),
-            ..Default::default()
-        })
-    }
-}
-
 impl Person {
     pub fn email(&self) -> Option<&String> {
         self.emails.first()
@@ -37,5 +26,16 @@ impl Person {
 
     pub fn emails(&self) -> &Vec<String> {
         &self.emails
+    }
+}
+
+impl FromStr for Person {
+    type Err = String;
+
+    fn from_str(input: &str) -> Result<Self, Self::Err> {
+        Ok(Person {
+            name: input.to_string(),
+            ..Default::default()
+        })
     }
 }
