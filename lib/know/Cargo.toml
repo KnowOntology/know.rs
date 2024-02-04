@@ -16,9 +16,10 @@ publish.workspace = true
 
 [features]
 default = ["serde"]
-serde = ["dep:serde", "dep:serde_with"]
+serde = ["dep:cfg_eval", "dep:serde", "dep:serde_with"]
 
 [dependencies]
+cfg_eval = { version = "0.1.2", optional = true }
 iri-string = { version = "0.7.0", features = ["serde"] }
 thiserror = "1.0.50"
 serde = { version = "1.0", features = ["derive"], optional = true }

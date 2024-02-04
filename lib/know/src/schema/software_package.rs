@@ -8,7 +8,9 @@ use std::str::FromStr;
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
 pub struct SoftwarePackage {
     pub name: String,
+
     pub version: String,
+
     pub link: Option<IriString>,
 }
 

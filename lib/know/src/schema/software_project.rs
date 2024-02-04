@@ -2,26 +2,40 @@
 
 use super::{Person, SoftwareLicense, SoftwarePackage};
 use iri_string::types::IriString;
-use std::{fmt, marker::PhantomData, str::FromStr};
+use std::str::FromStr;
 
 #[cfg(feature = "serde")]
-use serde::{de::Visitor, Deserialize, Deserializer};
+use serde_with::serde_as;
 
 /// See: https://en.wikipedia.org/wiki/Software
+#[cfg_attr(feature = "serde", cfg_eval::cfg_eval, serde_as)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
 pub struct SoftwareProject {
     pub name: String,
+
     pub version: String,
+
     pub summary: String,
+
     pub description: String,
+
     #[cfg_attr(feature = "serde", serde(default))]
     pub license: SoftwareLicense,
-    #[cfg_attr(feature = "serde", serde(default))]
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "author", default),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
     pub authors: Vec<Person>,
+
     pub email: Option<String>,
+
     pub link: Option<IriString>,
+
     pub github: Option<IriString>,
+
     pub package: Option<SoftwarePackage>,
 }
 
