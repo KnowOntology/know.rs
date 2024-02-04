@@ -2,6 +2,8 @@
 
 #[allow(unused)]
 pub static FEATURES: &[&str] = &[
+    #[cfg(feature = "chrono")]
+    "chrono",
     #[cfg(feature = "serde")]
     "serde",
 ];

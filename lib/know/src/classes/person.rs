@@ -1,6 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::{prelude::*, ThingLike};
+use crate::prelude::*;
+use super::ThingLike;
 use std::{
     fmt::{Display, Formatter},
     rc::Rc,
