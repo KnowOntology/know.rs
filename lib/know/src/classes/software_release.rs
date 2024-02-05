@@ -5,8 +5,8 @@ use crate::prelude::*;
 use std::str::FromStr;
 
 /// See: https://en.wikipedia.org/wiki/Software_release_life_cycle
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SoftwareRelease {
     pub version: String,
 

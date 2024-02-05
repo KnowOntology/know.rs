@@ -25,9 +25,9 @@ pub trait PersonLike: ThingLike {
     fn emails(&self) -> &Vec<Email>;
 }
 
+#[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", cfg_eval::cfg_eval, serde_as)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
 pub struct Person {
     pub name: Name,
 
