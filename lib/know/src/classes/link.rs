@@ -7,7 +7,7 @@ pub trait LinkLike: ThingLike {
     fn url(&self) -> &IRI;
 }
 
-#[derive(Debug, Clone, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, /*Default,*/ Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Link {
     pub name: Name,

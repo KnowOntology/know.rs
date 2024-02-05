@@ -4,7 +4,7 @@ use std::str::FromStr;
 
 /// See: https://en.wikipedia.org/wiki/Software_license
 /// See: https://spdx.org/licenses/
-#[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SoftwareLicense {
     Unspecified,

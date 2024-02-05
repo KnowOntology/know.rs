@@ -5,7 +5,7 @@ use crate::prelude::*;
 
 pub trait PlaceLike: ThingLike {}
 
-#[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Place {
     pub name: Name,

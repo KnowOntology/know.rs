@@ -8,7 +8,7 @@ use std::str::FromStr;
 use serde_with::serde_as;
 
 /// See: https://en.wikipedia.org/wiki/Software
-#[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", cfg_eval::cfg_eval, serde_as)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SoftwareProject {

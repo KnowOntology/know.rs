@@ -5,7 +5,7 @@ use crate::prelude::*;
 use std::{rc::Rc, str::FromStr};
 
 /// See: https://en.wikipedia.org/wiki/Software_package
-#[derive(Debug, Clone, Default, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct SoftwarePackage {
     pub name: Name,

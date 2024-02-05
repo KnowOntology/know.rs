@@ -7,7 +7,7 @@ pub trait ThingLike {
     fn name(&self) -> &Name;
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Clone, Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Thing {
     Event(Event),
