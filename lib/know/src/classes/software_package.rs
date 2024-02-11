@@ -10,6 +10,7 @@ use std::{rc::Rc, str::FromStr};
 pub struct SoftwarePackage {
     pub name: Name,
 
+    #[cfg_attr(feature = "serde", serde(default))]
     pub version: String,
 
     pub link: Option<IRI>,

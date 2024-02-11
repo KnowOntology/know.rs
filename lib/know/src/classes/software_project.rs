@@ -14,10 +14,13 @@ use serde_with::serde_as;
 pub struct SoftwareProject {
     pub name: Name,
 
+    #[cfg_attr(feature = "serde", serde(default))]
     pub version: String,
 
+    #[cfg_attr(feature = "serde", serde(default))]
     pub summary: String,
 
+    #[cfg_attr(feature = "serde", serde(default))]
     pub description: String,
 
     #[cfg_attr(feature = "serde", serde(default))]
