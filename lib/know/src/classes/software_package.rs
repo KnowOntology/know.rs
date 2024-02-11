@@ -37,3 +37,13 @@ impl FromStr for SoftwarePackage {
 }
 
 pub type SoftwarePackageRef = Rc<SoftwarePackage>;
+
+impl ThingLike for SoftwarePackageRef {
+    fn id(&self) -> Option<&str> {
+        None
+    }
+
+    fn name(&self) -> &Name {
+        &self.name
+    }
+}

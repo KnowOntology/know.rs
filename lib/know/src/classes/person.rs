@@ -159,7 +159,17 @@ impl FromStr for Person {
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
-pub struct PersonRef(Rc<Person>);
+pub struct PersonRef(pub Rc<Person>);
+
+impl ThingLike for PersonRef {
+    fn id(&self) -> Option<&str> {
+        None
+    }
+
+    fn name(&self) -> &Name {
+        &self.0.name
+    }
+}
 
 impl Display for PersonRef {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
