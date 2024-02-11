@@ -1,13 +1,14 @@
 // This is free and unencumbered software released into the public domain.
 
 use crate::{classes::*, prelude::*};
+use std::fmt::{Debug, Formatter};
 
 pub trait ThingLike {
     fn id(&self) -> Option<&str>;
     fn name(&self) -> &Name;
 }
 
-#[derive(Debug, Clone, Eq, Hash, PartialEq, PartialOrd, Ord)]
+#[derive(Clone, Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Thing {
     Event(Event),
@@ -20,6 +21,25 @@ pub enum Thing {
     SoftwarePackage(SoftwarePackage),
     SoftwareProject(SoftwareProject),
     SoftwareRelease(SoftwareRelease),
+}
+
+impl Debug for Thing {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Thing::Event(x) => x.fmt(f),
+            Thing::File(x) => x.fmt(f),
+            Thing::Group(x) => x.fmt(f),
+            Thing::Link(x) => x.fmt(f),
+            Thing::Person(x) => x.fmt(f),
+            Thing::Place(x) => x.fmt(f),
+            Thing::Project(x) => x.fmt(f),
+            Thing::SoftwarePackage(x) => x.fmt(f),
+            Thing::SoftwareProject(x) => x.fmt(f),
+            Thing::SoftwareRelease(x) => x.fmt(f),
+            #[allow(unreachable_patterns)]
+            _ => todo!(),
+        }
+    }
 }
 
 impl ThingLike for Thing {
