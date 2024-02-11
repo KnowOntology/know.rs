@@ -1,6 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::ThingLike;
+use super::{EventRef, ThingLike};
 use crate::prelude::*;
 use std::{
     fmt::{Debug, Display, Formatter},
@@ -13,7 +13,9 @@ use serde_with::serde_as;
 
 pub trait PersonLike: ThingLike {
     fn age(&self) -> Option<Age>;
-    fn birthdate(&self) -> Option<&Date>;
+    fn birthdate(&self) -> Option<Date>;
+    fn birth(&self) -> Option<&EventRef>;
+    fn death(&self) -> Option<&EventRef>;
     fn parents(&self) -> Vec<PersonRef>;
     fn father(&self) -> Option<&PersonRef>;
     fn mother(&self) -> Option<&PersonRef>;
@@ -34,7 +36,9 @@ pub struct Person {
 
     pub age: Option<Age>,
 
-    pub birthdate: Option<Date>,
+    pub birth: Option<EventRef>,
+
+    pub death: Option<EventRef>,
 
     pub father: Option<PersonRef>,
 
@@ -101,8 +105,16 @@ impl PersonLike for Person {
         self.age // TODO: calculate from self.birthdate
     }
 
-    fn birthdate(&self) -> Option<&Date> {
-        self.birthdate.as_ref()
+    fn birthdate(&self) -> Option<Date> {
+        None // TODO
+    }
+
+    fn birth(&self) -> Option<&EventRef> {
+        self.birth.as_ref()
+    }
+
+    fn death(&self) -> Option<&EventRef> {
+        self.death.as_ref()
     }
 
     fn parents(&self) -> Vec<PersonRef> {
@@ -174,7 +186,7 @@ impl ThingLike for PersonRef {
     }
 
     fn name(&self) -> &Name {
-        &self.0.name
+        self.0.name()
     }
 }
 
@@ -195,7 +207,7 @@ impl Debug for PersonRef {
 
 impl Display for PersonRef {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0.name)
+        write!(f, "{}", self.name())
     }
 }
 
