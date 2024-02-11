@@ -21,8 +21,8 @@ impl ThingLike for SoftwarePackage {
         None
     }
 
-    fn name(&self) -> &Name {
-        &self.name
+    fn name(&self) -> Option<&Name> {
+        Some(&self.name)
     }
 }
 
@@ -44,7 +44,7 @@ impl ThingLike for SoftwarePackageRef {
         None
     }
 
-    fn name(&self) -> &Name {
-        &self.name
+    fn name(&self) -> Option<&Name> {
+        Some(&self.name)
     }
 }

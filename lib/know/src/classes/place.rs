@@ -16,8 +16,8 @@ impl ThingLike for Place {
         None
     }
 
-    fn name(&self) -> &Name {
-        &self.name
+    fn name(&self) -> Option<&Name> {
+        Some(&self.name)
     }
 }
 

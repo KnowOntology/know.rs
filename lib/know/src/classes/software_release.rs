@@ -20,8 +20,8 @@ impl ThingLike for SoftwareRelease {
         None
     }
 
-    fn name(&self) -> &Name {
-        &self.version
+    fn name(&self) -> Option<&Name> {
+        Some(&self.version)
     }
 }
 

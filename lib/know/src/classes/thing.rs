@@ -5,7 +5,7 @@ use std::fmt::{Debug, Formatter};
 
 pub trait ThingLike {
     fn id(&self) -> Option<&str>;
-    fn name(&self) -> &Name;
+    fn name(&self) -> Option<&Name>;
 }
 
 #[derive(Clone, Eq, Hash, PartialEq, PartialOrd, Ord)]
@@ -58,7 +58,7 @@ impl ThingLike for Thing {
         }
     }
 
-    fn name(&self) -> &Name {
+    fn name(&self) -> Option<&Name> {
         match self {
             Thing::Event(e) => e.name(),
             Thing::File(f) => f.name(),

@@ -20,8 +20,8 @@ impl ThingLike for Link {
         Some(self.url.as_str())
     }
 
-    fn name(&self) -> &Name {
-        &self.name
+    fn name(&self) -> Option<&Name> {
+        Some(&self.name)
     }
 }
 

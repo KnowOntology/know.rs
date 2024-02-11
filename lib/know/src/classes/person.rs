@@ -95,8 +95,8 @@ impl ThingLike for Person {
         None
     }
 
-    fn name(&self) -> &Name {
-        &self.name
+    fn name(&self) -> Option<&Name> {
+        Some(&self.name)
     }
 }
 
@@ -106,7 +106,10 @@ impl PersonLike for Person {
     }
 
     fn birthdate(&self) -> Option<Date> {
-        None // TODO
+        match self.birth {
+            Some(ref event) => event.0.date,
+            None => None,
+        }
     }
 
     fn birth(&self) -> Option<&EventRef> {
@@ -185,7 +188,7 @@ impl ThingLike for PersonRef {
         None
     }
 
-    fn name(&self) -> &Name {
+    fn name(&self) -> Option<&Name> {
         self.0.name()
     }
 }
@@ -207,7 +210,16 @@ impl Debug for PersonRef {
 
 impl Display for PersonRef {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.name())
+        match (self.id(), self.name(), self.0.email()) {
+            (Some(id), Some(name), Some(email)) => write!(f, "{} <{}> (#{})", name, email, id),
+            (Some(id), Some(name), None) => write!(f, "{} (#{})", name, id),
+            (Some(id), None, Some(email)) => write!(f, "<{}> (#{})", email, id),
+            (Some(id), None, None) => write!(f, "#{}", id),
+            (None, Some(name), Some(email)) => write!(f, "{} <{}>", name, email),
+            (None, Some(name), None) => write!(f, "{}", name),
+            (None, None, Some(email)) => write!(f, "<{}>", email),
+            (None, None, None) => write!(f, "↪Person"),
+        }
     }
 }
 

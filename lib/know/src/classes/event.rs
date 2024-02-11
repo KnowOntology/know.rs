@@ -12,7 +12,9 @@ pub trait EventLike: ThingLike {}
 #[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Event {
-    pub name: Name,
+    pub name: Option<Name>,
+
+    pub date: Option<Date>,
 }
 
 impl ThingLike for Event {
@@ -20,8 +22,8 @@ impl ThingLike for Event {
         None
     }
 
-    fn name(&self) -> &Name {
-        &self.name
+    fn name(&self) -> Option<&Name> {
+        self.name.as_ref()
     }
 }
 
@@ -36,7 +38,7 @@ impl ThingLike for EventRef {
         None
     }
 
-    fn name(&self) -> &Name {
+    fn name(&self) -> Option<&Name> {
         self.0.name()
     }
 }
@@ -44,8 +46,11 @@ impl ThingLike for EventRef {
 impl Debug for EventRef {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let mut result = &mut f.debug_struct("EventRef");
-        if !self.0.name.is_empty() {
-            result = result.field("name", &self.0.name);
+        if let Some(name) = self.name() {
+            result = result.field("name", name);
+        }
+        if let Some(ref date) = self.0.date {
+            result = result.field("date", date);
         }
         result.finish()
     }
@@ -53,6 +58,15 @@ impl Debug for EventRef {
 
 impl Display for EventRef {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.name())
+        match (self.id(), self.name(), self.0.date) {
+            (Some(id), Some(name), Some(date)) => write!(f, "{} {} (#{})", date, name, id),
+            (Some(id), Some(name), None) => write!(f, "{} (#{})", name, id),
+            (Some(id), None, Some(date)) => write!(f, "{} (#{})", date, id),
+            (Some(id), None, None) => write!(f, "#{}", id),
+            (None, Some(name), Some(date)) => write!(f, "{} {}", date, name),
+            (None, Some(name), None) => write!(f, "{}", name),
+            (None, None, Some(date)) => write!(f, "{}", date),
+            (None, None, None) => write!(f, "↪Event"),
+        }
     }
 }
