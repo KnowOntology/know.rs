@@ -10,6 +10,8 @@ pub type Date = String;
 
 pub type Email = String;
 
-pub type IRI = IriString;
+pub type IRI = IriString; // TODO: use a newtype
 
 pub type Name = String;
+
+pub type Age = usize; // TODO: use a newtype

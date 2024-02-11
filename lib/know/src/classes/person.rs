@@ -12,6 +12,7 @@ use std::{
 use serde_with::serde_as;
 
 pub trait PersonLike: ThingLike {
+    fn age(&self) -> Option<Age>;
     fn birthdate(&self) -> Option<&Date>;
     fn parents(&self) -> Vec<PersonRef>;
     fn father(&self) -> Option<&PersonRef>;
@@ -30,6 +31,8 @@ pub trait PersonLike: ThingLike {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Person {
     pub name: Name,
+
+    pub age: Option<Age>,
 
     pub birthdate: Option<Date>,
 
@@ -94,6 +97,10 @@ impl ThingLike for Person {
 }
 
 impl PersonLike for Person {
+    fn age(&self) -> Option<Age> {
+        self.age // TODO: calculate from self.birthdate
+    }
+
     fn birthdate(&self) -> Option<&Date> {
         self.birthdate.as_ref()
     }
