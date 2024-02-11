@@ -3,7 +3,7 @@
 use super::ThingLike;
 use crate::prelude::*;
 use std::{
-    fmt::{Display, Formatter},
+    fmt::{Debug, Display, Formatter},
     rc::Rc,
     str::FromStr,
 };
@@ -158,7 +158,7 @@ impl FromStr for Person {
 }
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
+#[derive(Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
 pub struct PersonRef(pub Rc<Person>);
 
 impl ThingLike for PersonRef {
@@ -168,6 +168,21 @@ impl ThingLike for PersonRef {
 
     fn name(&self) -> &Name {
         &self.0.name
+    }
+}
+
+impl Debug for PersonRef {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let mut result = &mut f.debug_struct("PersonRef");
+        if !self.0.name.is_empty() {
+            result = result.field("name", &self.0.name);
+        }
+        if self.0.emails.len() == 1 {
+            result = result.field("email", &self.0.emails[0]);
+        } else if !self.0.emails.is_empty() {
+            result = result.field("emails", &self.0.emails);
+        }
+        result.finish()
     }
 }
 
