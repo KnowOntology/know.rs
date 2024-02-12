@@ -12,6 +12,8 @@ use std::{
 use serde_with::serde_as;
 
 pub trait PersonLike: ThingLike {
+    fn nickname(&self) -> Option<&Name>;
+    fn nicknames(&self) -> &Vec<Name>;
     fn age(&self) -> Option<Age>;
     fn birthdate(&self) -> Option<Date>;
     fn birth(&self) -> Option<&EventRef>;
@@ -26,6 +28,8 @@ pub trait PersonLike: ThingLike {
     fn knows(&self) -> &Vec<PersonRef>;
     fn email(&self) -> Option<&Email>;
     fn emails(&self) -> &Vec<Email>;
+    fn phone(&self) -> Option<&Phone>;
+    fn phones(&self) -> &Vec<Phone>;
 }
 
 #[derive(Debug, Clone, Default, Eq, Hash, PartialEq, PartialOrd, Ord)]
@@ -33,6 +37,13 @@ pub trait PersonLike: ThingLike {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Person {
     pub name: Name,
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, alias = "nickname"),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub nicknames: Vec<Name>,
 
     pub age: Option<Age>,
 
@@ -88,6 +99,13 @@ pub struct Person {
         serde_as(as = "serde_with::OneOrMany<_>")
     )]
     pub emails: Vec<Email>,
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, alias = "phone"),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub phones: Vec<Phone>,
 }
 
 impl ThingLike for Person {
@@ -101,6 +119,14 @@ impl ThingLike for Person {
 }
 
 impl PersonLike for Person {
+    fn nickname(&self) -> Option<&Name> {
+        self.nicknames.first()
+    }
+
+    fn nicknames(&self) -> &Vec<Name> {
+        self.nicknames.as_ref()
+    }
+
     fn age(&self) -> Option<Age> {
         self.age // TODO: calculate from self.birthdate
     }
@@ -164,7 +190,15 @@ impl PersonLike for Person {
     }
 
     fn emails(&self) -> &Vec<Email> {
-        &self.emails
+        self.emails.as_ref()
+    }
+
+    fn phone(&self) -> Option<&Phone> {
+        self.phones.first()
+    }
+
+    fn phones(&self) -> &Vec<Phone> {
+        self.phones.as_ref()
     }
 }
 
@@ -199,11 +233,16 @@ impl Debug for PersonRef {
         if !self.0.name.is_empty() {
             result = result.field("name", &self.0.name);
         }
-        if self.0.emails.len() == 1 {
-            result = result.field("email", &self.0.emails[0]);
-        } else if !self.0.emails.is_empty() {
-            result = result.field("emails", &self.0.emails);
-        }
+        result = match self.0.nicknames.len() {
+            0 => result,
+            1 => result.field("nickname", &self.0.nicknames[0]),
+            _ => result.field("nicknames", &self.0.nicknames),
+        };
+        result = match self.0.emails.len() {
+            0 => result,
+            1 => result.field("email", &self.0.emails[0]),
+            _ => result.field("emails", &self.0.emails),
+        };
         result.finish()
     }
 }
