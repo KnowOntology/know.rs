@@ -23,6 +23,9 @@ pub trait PersonLike: ThingLike {
     fn mother(&self) -> Option<&PersonRef>;
     fn siblings(&self) -> &Vec<PersonRef>;
     fn spouse(&self) -> Option<&PersonRef>;
+    fn spouses(&self) -> &Vec<PersonRef>;
+    fn partner(&self) -> Option<&PersonRef>;
+    fn partners(&self) -> &Vec<PersonRef>;
     fn children(&self) -> &Vec<PersonRef>;
     fn colleagues(&self) -> &Vec<PersonRef>;
     fn knows(&self) -> &Vec<PersonRef>;
@@ -69,8 +72,19 @@ pub struct Person {
     )]
     pub siblings: Vec<PersonRef>,
 
-    #[cfg_attr(feature = "serde", serde(default, alias = "husband", alias = "wife"))]
-    pub spouse: Option<PersonRef>,
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, alias = "spouse", alias = "husband", alias = "wife"),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub spouses: Vec<PersonRef>,
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, alias = "partner", alias = "boyfriend", alias = "girlfriend"),
+        serde_as(as = "serde_with::OneOrMany<_>")
+    )]
+    pub partners: Vec<PersonRef>,
 
     #[cfg_attr(
         feature = "serde",
@@ -170,7 +184,19 @@ impl PersonLike for Person {
     }
 
     fn spouse(&self) -> Option<&PersonRef> {
-        self.spouse.as_ref()
+        self.spouses.first()
+    }
+
+    fn spouses(&self) -> &Vec<PersonRef> {
+        self.spouses.as_ref()
+    }
+
+    fn partner(&self) -> Option<&PersonRef> {
+        self.partners.first()
+    }
+
+    fn partners(&self) -> &Vec<PersonRef> {
+        self.partners.as_ref()
     }
 
     fn children(&self) -> &Vec<PersonRef> {
