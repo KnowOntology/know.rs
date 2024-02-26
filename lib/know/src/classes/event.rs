@@ -14,7 +14,13 @@ pub trait EventLike: ThingLike {}
 pub struct Event {
     pub name: Option<Name>,
 
-    pub date: Option<Date>,
+    pub start: Option<Date>,
+
+    pub end: Option<Date>,
+
+    // TODO: location
+    // TODO: organizer
+    // TODO: attendees
 }
 
 impl ThingLike for Event {
@@ -49,8 +55,11 @@ impl Debug for EventRef {
         if let Some(name) = self.name() {
             result = result.field("name", name);
         }
-        if let Some(ref date) = self.0.date {
-            result = result.field("date", date);
+        if let Some(ref date) = self.0.start {
+            result = result.field("start", date);
+        }
+        if let Some(ref date) = self.0.end {
+            result = result.field("end", date);
         }
         result.finish()
     }
@@ -58,7 +67,7 @@ impl Debug for EventRef {
 
 impl Display for EventRef {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match (self.id(), self.name(), self.0.date) {
+        match (self.id(), self.name(), self.0.start) {
             (Some(id), Some(name), Some(date)) => write!(f, "{} {} (#{})", date, name, id),
             (Some(id), Some(name), None) => write!(f, "{} (#{})", name, id),
             (Some(id), None, Some(date)) => write!(f, "{} (#{})", date, id),

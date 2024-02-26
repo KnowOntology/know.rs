@@ -147,7 +147,7 @@ impl PersonLike for Person {
 
     fn birthdate(&self) -> Option<Date> {
         match self.birth {
-            Some(ref event) => event.0.date,
+            Some(ref event) => event.0.start,
             None => None,
         }
     }
