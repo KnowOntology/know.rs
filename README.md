@@ -29,12 +29,12 @@ use know::*;
 ## 👨‍💻 Development
 
 ```console
-$ git clone https://github.com/HaltiaAI/know.rs.git
+$ git clone https://github.com/KnowOntology/know.rs.git
 ```
 
 - - -
 
-[![Share on Twitter](https://img.shields.io/badge/share%20on-twitter-03A9F4?logo=twitter)](https://twitter.com/share?url=https://github.com/HaltiaAI/know.rs&text=Know.rs:%20The%20Know%20Framework%20for%20Rust)
-[![Share on Reddit](https://img.shields.io/badge/share%20on-reddit-red?logo=reddit)](https://reddit.com/submit?url=https://github.com/HaltiaAI/know.rs&title=Know.rs:%20The%20Know%20Framework%20for%20Rust)
-[![Share on Hacker News](https://img.shields.io/badge/share%20on-hacker%20news-orange?logo=ycombinator)](https://news.ycombinator.com/submitlink?u=https://github.com/HaltiaAI/know.rs&t=Know.rs:%20The%20Know%20Framework%20for%20Rust)
-[![Share on Facebook](https://img.shields.io/badge/share%20on-facebook-1976D2?logo=facebook)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/HaltiaAI/know.rs)
+[![Share on Twitter](https://img.shields.io/badge/share%20on-twitter-03A9F4?logo=twitter)](https://twitter.com/share?url=https://github.com/KnowOntology/know.rs&text=Know.rs:%20The%20Know%20Framework%20for%20Rust)
+[![Share on Reddit](https://img.shields.io/badge/share%20on-reddit-red?logo=reddit)](https://reddit.com/submit?url=https://github.com/KnowOntology/know.rs&title=Know.rs:%20The%20Know%20Framework%20for%20Rust)
+[![Share on Hacker News](https://img.shields.io/badge/share%20on-hacker%20news-orange?logo=ycombinator)](https://news.ycombinator.com/submitlink?u=https://github.com/KnowOntology/know.rs&t=Know.rs:%20The%20Know%20Framework%20for%20Rust)
+[![Share on Facebook](https://img.shields.io/badge/share%20on-facebook-1976D2?logo=facebook)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/KnowOntology/know.rs)
